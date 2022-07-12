@@ -1,0 +1,20 @@
+const XMLHttpRequest = require('xmlhttprequest').XMLHttpRequest;
+const API = 'https://api.escuelajs.co/api/v1';
+
+function fetchData(urlApi, callback){
+    let xhttp = new XMLHttpRequest();
+    
+    xhttp.open('GET',urlApi, true);
+    xhttp.onreadystatechange = function (event) {
+        if (xhttp.readyState === 4 ) {   // 4 = completado
+            if(xhttp.status === 200) {  // 200 = respondio de forma correcta
+                callback(null, JSON.parse(xhttp.responseText));
+            }
+        } else {
+            const error = new Error('Error' + urlApi);
+            return callback(error, null);        
+        }
+        
+    }
+    xhttp.send()
+}
